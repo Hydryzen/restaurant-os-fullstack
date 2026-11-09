@@ -1,0 +1,501 @@
+/* =========================================
+   1. BASE RESET & FONTS
+   ========================================= */
+html { box-sizing: border-box; }
+*, *:before, *:after { box-sizing: inherit; }
+body, html {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 14px;
+  margin: 0;
+  background-color: #0d0d0d;
+}
+a { text-decoration: none; color: #d9d9d9; }
+input, button { font-family: inherit; }
+
+/* =========================================
+   2. THEME VARIABLES (Dark Mode)
+   ========================================= */
+#app.theme-black {
+  --bg-page: #0d0d0d;
+  --bg-raised: #1f1f1f;
+  --bg-elevated: #383838;
+  --bg-input: #4d4d4d;
+  --text-primary: #d9d9d9;
+  --text-muted: #888;
+  --text-bright: #ffffff;
+  --accent: #ed2553;
+  --accent-hover: #ee4972;
+  --nav-bg: #1f1f1f;
+  --nav-hover: #383838;
+  
+  color: var(--text-primary);
+  background-color: var(--bg-page);
+  min-height: 100vh;
+}
+
+/* =========================================
+   3. BUTTONS
+   ========================================= */
+.btn {
+  display: inline-block;
+  font-weight: 700;
+  cursor: pointer;
+  border: 0;
+  border-radius: 4px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 15px;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+.btn-primary { background-color: var(--accent); color: #fff; }
+.btn-primary:hover { background-color: var(--accent-hover); }
+.btn-secondary { background-color: var(--bg-elevated); color: #fff; }
+.btn-secondary:hover { background-color: var(--bg-input); }
+.btn-danger { background-color: #dc2626; color: white; }
+.btn-danger:hover { background-color: #b91c1c; }
+
+/* =========================================
+   4. DASHBOARD LAYOUT
+   ========================================= */
+.dashboard-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 260px;
+  background-color: var(--bg-raised);
+  border-right: 1px solid var(--bg-elevated);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+}
+
+.sidebar-logo {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--accent);
+  padding: 0 20px 20px 20px;
+  border-bottom: 1px solid var(--bg-elevated);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0 15px;
+}
+
+.sidebar-nav a {
+  color: var(--text-primary);
+  padding: 12px 15px;
+  border-radius: 8px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s ease;
+}
+
+.sidebar-nav a:hover, 
+.sidebar-nav a.active {
+  background-color: var(--bg-elevated);
+  color: var(--accent);
+}
+
+.sidebar-nav a.active {
+  border-left: 4px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background-color: var(--bg-page);
+}
+
+.top-header {
+  height: 70px;
+  background-color: var(--bg-raised);
+  border-bottom: 1px solid var(--bg-elevated);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  flex-shrink: 0;
+}
+
+.top-header h1 {
+  font-size: 20px;
+  margin: 0;
+  color: var(--text-bright);
+}
+
+.dashboard-content {
+  padding: 30px;
+}
+
+/* =========================================
+   5. KANBAN BOARD (Sin colores, alto contraste)
+   ========================================= */
+.kanban-board {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  height: calc(100vh - 200px);
+  overflow-x: auto;
+}
+
+.kanban-column {
+  flex: 1;
+  min-width: 300px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--bg-elevated);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.kanban-header {
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--bg-elevated);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-raised);
+  border-radius: 8px 8px 0 0;
+  border-top: none; 
+}
+
+/* Letras Blancas, gruesas y con espaciado */
+.kanban-header h3 {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-bright); 
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 800; 
+}
+
+.kanban-count {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.kanban-cards {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: auto;
+  flex-grow: 1;
+  scrollbar-width: none; 
+}
+.kanban-cards::-webkit-scrollbar {
+  display: none; 
+}
+
+.kanban-cards .gallery {
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+/* =========================================
+   6. ORDER CARDS
+   ========================================= */
+.gallery {
+  background-color: var(--bg-raised);
+  border: 1px solid var(--bg-elevated);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  flex-shrink: 0;
+}
+
+.gallery:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+  border-color: var(--bg-input);
+}
+
+.order-card-content {
+  padding: 20px;
+  flex-grow: 1;
+}
+
+.order-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--bg-elevated);
+  padding-bottom: 12px;
+}
+
+.order-card-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: var(--text-bright);
+  font-weight: 700;
+}
+
+/* Badges de estado (Grises Minimalistas) */
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background-color: var(--bg-elevated);
+  color: var(--text-bright);
+  border: 1px solid var(--bg-input);
+}
+
+/* Botón dentro de la tarjeta */
+.card-actions {
+  display: flex;
+  padding: 15px 20px;
+  background-color: rgba(0,0,0,0.2);
+  border-top: 1px solid var(--bg-elevated);
+}
+
+.card-actions .btn {
+  width: 100%;
+}
+
+/* =========================================
+   7. MODALS & FORMS
+   ========================================= */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background-color: var(--bg-raised);
+  border: 1px solid var(--bg-elevated);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  text-align: left;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--bg-elevated);
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+  color: var(--text-bright);
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 24px;
+  cursor: pointer;
+}
+.close-btn:hover { color: var(--accent); }
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--text-muted);
+}
+
+.form-group input, 
+.form-group select {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid var(--bg-elevated);
+  background-color: var(--bg-page);
+  color: var(--text-bright);
+  font-size: 14px;
+}
+
+.form-group input:focus, 
+.form-group select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+
+/* =========================================
+   8. SIDEBAR USER PROFILE
+   ========================================= */
+.sidebar-user {
+  margin-top: auto;
+  padding: 20px;
+  border-top: 1px solid var(--bg-elevated);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  background-color: var(--accent);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.user-name {
+  margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--text-bright);
+}
+
+.user-role {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.btn-logout {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.btn-logout:hover { color: var(--accent); }
+
+/* =========================================
+   9. LOGIN SCREEN
+   ========================================= */
+.login-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, rgba(237, 37, 83, 0.15), var(--bg-page) 60%);
+}
+
+.login-box {
+  background-color: var(--bg-raised);
+  border: 1px solid var(--bg-elevated);
+  padding: 40px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.login-box h1 {
+  margin: 0 0 10px 0;
+  color: var(--text-bright);
+  font-size: 28px;
+}
+
+.login-box p {
+  color: var(--text-muted);
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.login-box .form-group {
+  text-align: left;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--bg-page);
+  border: 1px solid var(--bg-elevated);
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+}
+
+.login-box input:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.error-text {
+  color: #ef4444;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: left;
+}
+
+/* =========================================
+   10. SCROLLBARS & RESPONSIVE
+   ========================================= */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-page); border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: var(--bg-elevated); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--bg-input); }
+
+@media screen and (max-width: 768px) {
+  .dashboard-layout { flex-direction: column; }
+  .sidebar {
+    width: 100%;
+    padding: 10px 0;
+    border-right: none;
+    border-bottom: 1px solid var(--bg-elevated);
+  }
+  .sidebar-nav { flex-direction: row; overflow-x: auto; }
+  .sidebar-nav a { white-space: nowrap; }
+}
